@@ -509,7 +509,7 @@
     </div>
 
     <div id="mainScreen">
-        <button class="admin-btn" onclick="toggleAdmin()">🔒 Admin</button>
+        <button class="admin-btn" id="adminToggle" onclick="toggleAdmin()">🔒 Admin</button>
 
         <div class="header">
             <h1>🔥 Ofertas Imperdíveis</h1>
@@ -581,14 +581,12 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Variáveis globais
         var isAdmin = false;
         var products = [];
         var allProducts = [];
         var auth;
         var db;
 
-        // Configuração Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDavrer1Tsd2-0pXR8jLf8gqyNToi_mlwk",
             authDomain: "loja-99d52.firebaseapp.com",
@@ -602,22 +600,24 @@
         auth = firebase.auth();
         db = firebase.firestore();
 
-        // Verificar autenticação
         auth.onAuthStateChanged(function(user) {
+            const adminBtn = document.getElementById('adminToggle');
+            const addBtn = document.getElementById('addBtn');
+            
             if (user) {
                 isAdmin = true;
-                document.getElementById('adminToggle').innerHTML = '🔓 Sair';
-                document.getElementById('addBtn').classList.add('show');
+                adminBtn.innerHTML = '🔓 Sair';
+                addBtn.classList.add('show');
                 renderProducts();
             } else {
                 isAdmin = false;
-                document.getElementById('adminToggle').innerHTML = '🔒 Admin';
-                document.getElementById('addBtn').classList.remove('show');
+                adminBtn.innerHTML = '🔒 Admin';
+                addBtn.classList.remove('show');
+                renderProducts();
             }
         });
 
         function toggleAdmin() {
-            console.log('Toggle admin clicado!');
             if (isAdmin) {
                 if (confirm('Deseja sair do modo administrador?')) {
                     auth.signOut().then(() => {
@@ -804,14 +804,12 @@
             `).join('');
         }
 
-        // Login com Enter
         document.getElementById('password').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 fazerLogin();
             }
         });
 
-        // Carregar produtos ao iniciar
         loadProducts();
     </script>
 </body>
