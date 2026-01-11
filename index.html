@@ -1,1 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Ofertas Imperdíveis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #a0aec0;
+        }
+
+        .admin-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(107, 95, 255, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 95, 255, 0.6);
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #2d3748;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            font-size: 1.1em;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6b5fff;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(107, 95, 255, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: #718096;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+            font-size: 1.3em;
+        }
+
+        .add-product-btn {
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: none;
+            box-shadow: 0 4px 15px rgba(107, 95, 255, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .add-product-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 95, 255, 0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a2942 0%, #0a1628 100%);
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 2px solid #2d3748;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: #718096;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #e2e8f0;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #2d3748;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 1em;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6b5fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group select option {
+            background: #1a2942;
+            color: white;
+        }
+
+        .form-group small {
+            color: #a0aec0;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 25px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #1e2f47 0%, #162032 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+            position: relative;
+            border: 2px solid #2d3748;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(107, 95, 255, 0.3);
+            border-color: #6b5fff;
+        }
+
+        .platform-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .platform-shopee {
+            background: linear-gradient(135deg, #ff6b00, #ff8533);
+            color: white;
+        }
+
+        .platform-mercadolivre {
+            background: linear-gradient(135deg, #fff159, #ffe500);
+            color: #333;
+        }
+
+        .platform-amazon {
+            background: linear-gradient(135deg, #ff9900, #ffad33);
+            color: white;
+        }
+
+        .platform-aliexpress {
+            background: linear-gradient(135deg, #e62e04, #ff4520);
+            color: white;
+        }
+
+        .platform-outros {
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            color: white;
+        }
+
+        .media-container {
+            width: 100%;
+            height: 250px;
+            background: #0a1628;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .media-container img,
+        .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-container video {
+            cursor: pointer;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-description {
+            color: #a0aec0;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 2em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .affiliate-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(107, 95, 255, 0.4);
+        }
+
+        .affiliate-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(107, 95, 255, 0.6);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            z-index: 10;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 0, 0, 1);
+            transform: scale(1.1);
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: linear-gradient(135deg, #1a2942 0%, #0a1628 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 2px solid #2d3748;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #6b5fff, #9b7aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .error-message {
+            color: #fc8181;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            color: #9b7aff;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1201px) and (max-width: 1600px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loginScreen" class="hidden">
+        <div class="login-container">
+            <h2>🔒 Painel Administrativo</h2>
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="email" placeholder="admin@exemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="password">
+            </div>
+            <button class="submit-btn" onclick="fazerLogin()">Entrar</button>
+            <p class="error-message" id="errorMessage">E-mail ou senha incorretos!</p>
+        </div>
+    </div>
+
+    <div id="mainScreen">
+        <button class="admin-btn" onclick="toggleAdmin()">🔒 Admin</button>
+
+        <div class="header">
+            <h1>🔥 Ofertas Imperdíveis</h1>
+            <p>As melhores ofertas das principais plataformas!</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar produtos..." oninput="searchProducts()">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <button class="add-product-btn" id="addBtn" onclick="openModal()">➕ Adicionar Produto</button>
+
+        <div class="products-grid" id="productsGrid">
+            <div class="loading">🔥 Carregando produtos...</div>
+        </div>
+    </div>
+
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Novo Produto</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label>Nome do Produto *</label>
+                <input type="text" id="productName">
+            </div>
+            
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea id="productDescription" placeholder="Descrição breve do produto"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Preço Final *</label>
+                <input type="text" id="productPrice" placeholder="R$ 99,90">
+            </div>
+            
+            <div class="form-group">
+                <label>Plataforma *</label>
+                <select id="productPlatform">
+                    <option value="shopee">Shopee</option>
+                    <option value="mercadolivre">Mercado Livre</option>
+                    <option value="amazon">Amazon</option>
+                    <option value="aliexpress">AliExpress</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Link de Afiliado *</label>
+                <input type="text" id="affiliateLink" placeholder="https://...">
+            </div>
+            
+            <div class="form-group">
+                <label>URL da Imagem/Vídeo</label>
+                <input type="text" id="mediaUrl" placeholder="https://exemplo.com/imagem.jpg">
+                <small>Cole a URL completa de uma imagem ou vídeo</small>
+            </div>
+            
+            <button class="submit-btn" onclick="addProduct()">Adicionar Produto</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Variáveis globais
+        var isAdmin = false;
+        var products = [];
+        var allProducts = [];
+        var auth;
+        var db;
+
+        // Configuração Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDavrer1Tsd2-0pXR8jLf8gqyNToi_mlwk",
+            authDomain: "loja-99d52.firebaseapp.com",
+            projectId: "loja-99d52",
+            storageBucket: "loja-99d52.firebasestorage.app",
+            messagingSenderId: "76001366492",
+            appId: "1:76001366492:web:8a729d7e851f7a7d87ff19"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+
+        // Verificar autenticação
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                isAdmin = true;
+                document.getElementById('adminToggle').innerHTML = '🔓 Sair';
+                document.getElementById('addBtn').classList.add('show');
+                renderProducts();
+            } else {
+                isAdmin = false;
+                document.getElementById('adminToggle').innerHTML = '🔒 Admin';
+                document.getElementById('addBtn').classList.remove('show');
+            }
+        });
+
+        function toggleAdmin() {
+            console.log('Toggle admin clicado!');
+            if (isAdmin) {
+                if (confirm('Deseja sair do modo administrador?')) {
+                    auth.signOut().then(() => {
+                        document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'none');
+                    });
+                }
+            } else {
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('mainScreen').classList.add('hidden');
+            }
+        }
+
+        function fazerLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('mainScreen').classList.remove('hidden');
+                    document.getElementById('errorMessage').style.display = 'none';
+                    document.getElementById('email').value = '';
+                    document.getElementById('password').value = '';
+                })
+                .catch((error) => {
+                    document.getElementById('errorMessage').style.display = 'block';
+                    console.error("Erro ao fazer login:", error);
+                });
+        }
+
+        function openModal() {
+            if (!isAdmin) {
+                alert('Você precisa estar logado como administrador!');
+                return;
+            }
+            document.getElementById('productModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function addProduct() {
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const link = document.getElementById('affiliateLink').value;
+            
+            if (!name || !price || !link) {
+                alert('Preencha os campos obrigatórios!');
+                return;
+            }
+            
+            const product = {
+                name: name,
+                description: document.getElementById('productDescription').value,
+                price: price,
+                platform: document.getElementById('productPlatform').value,
+                link: link,
+                mediaUrl: document.getElementById('mediaUrl').value,
+                createdAt: new Date()
+            };
+            
+            db.collection('products').add(product)
+                .then(() => {
+                    loadProducts();
+                    closeModal();
+                    
+                    document.getElementById('productName').value = '';
+                    document.getElementById('productDescription').value = '';
+                    document.getElementById('productPrice').value = '';
+                    document.getElementById('affiliateLink').value = '';
+                    document.getElementById('mediaUrl').value = '';
+                    
+                    alert('Produto adicionado com sucesso! 🎉');
+                })
+                .catch((error) => {
+                    console.error("Erro ao adicionar produto:", error);
+                    alert('Erro ao adicionar produto. Tente novamente.');
+                });
+        }
+
+        function deleteProduct(id) {
+            if (!isAdmin) return;
+            if (confirm('Deseja realmente excluir este produto?')) {
+                db.collection('products').doc(id).delete()
+                    .then(() => {
+                        loadProducts();
+                        alert('Produto excluído com sucesso!');
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao excluir produto:", error);
+                        alert('Erro ao excluir produto. Tente novamente.');
+                    });
+            }
+        }
+
+        function loadProducts() {
+            db.collection('products').orderBy('createdAt', 'desc').get()
+                .then((querySnapshot) => {
+                    products = [];
+                    querySnapshot.forEach((doc) => {
+                        products.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    
+                    allProducts = [...products];
+                    renderProducts();
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar produtos:", error);
+                    document.getElementById('productsGrid').innerHTML = 
+                        '<p style="color: #fc8181; text-align: center; grid-column: 1/-1;">Erro ao carregar produtos.</p>';
+                });
+        }
+
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                products = [...allProducts];
+            } else {
+                products = allProducts.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    (product.description && product.description.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            renderProducts();
+        }
+
+        function getPlatformName(platform) {
+            const names = {
+                shopee: 'Shopee',
+                mercadolivre: 'Mercado Livre',
+                amazon: 'Amazon',
+                aliexpress: 'AliExpress',
+                outros: 'Outros'
+            };
+            return names[platform] || platform;
+        }
+
+        function isVideo(url) {
+            if (!url) return false;
+            const lower = url.toLowerCase();
+            return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.ogg') || lower.endsWith('.mov');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="color: #a0aec0; text-align: center; grid-column: 1/-1; font-size: 1.2em;">Nenhum produto encontrado.</p>';
+                return;
+            }
+            
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <button class="delete-btn" onclick="deleteProduct('${product.id}')" style="display: ${isAdmin ? 'block' : 'none'}">×</button>
+                    <span class="platform-badge platform-${product.platform}">
+                        ${getPlatformName(product.platform)}
+                    </span>
+                    
+                    <div class="media-container">
+                        ${product.mediaUrl ? (
+                            isVideo(product.mediaUrl) 
+                                ? `<video src="${product.mediaUrl}" muted loop onmouseenter="this.play()" onmouseleave="this.pause(); this.currentTime=0;" playsinline></video>`
+                                : `<img src="${product.mediaUrl}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div style=\\'display: flex; align-items: center; justify-content: center; height: 100%; color: #718096; font-size: 3em;\\'>📦</div>'">`
+                        ) : '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #718096; font-size: 3em;">📦</div>'}
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        ${product.description ? `<p class="product-description">${product.description}</p>` : ''}
+                        <div class="price-container">
+                            <span class="price">${product.price}</span>
+                        </div>
+                        <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="affiliate-btn">
+                            🛒 Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Login com Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                fazerLogin();
+            }
+        });
+
+        // Carregar produtos ao iniciar
+        loadProducts();
+    </script>
+</body>
+</html>
