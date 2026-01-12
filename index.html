@@ -152,13 +152,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDavrer1Tsd2-0pXR8jLf8gqyNToi_mlwk",
-            authDomain: "loja-99d52.firebaseapp.com",
-            projectId: "loja-99d52",
-            storageBucket: "loja-99d52.appspot.com",
-            messagingSenderId: "76001366492",
-            appId: "1:76001366492:web:8a729d7e851f7a7d87ff19"
+       const firebaseConfig = {
+    apiKey: "AIzaSyDavrer1Tsd2-0pXR8jLf8gqyNToi_mlwk",
+    authDomain: "loja-99d52.firebaseapp.com",
+    projectId: "loja-99d52",
+    storageBucket: "loja-99d52.firebasestorage.app", // Verifique se é .appspot.com ou este
+    messagingSenderId: "852757558938", // Use este que você encontrou
+    appId: "1:852757558938:web:8a729d7e851f7a7d87ff19" // Ajustado com o novo ID
+};
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
