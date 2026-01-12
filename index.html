@@ -5,59 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔥 Ofertas Imperdíveis</title>
     <style>
-        :root { --main-color: #6b5fff; --bg-gradient: linear-gradient(135deg, #0a1628 0%, #1a2942 100%); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            background-size: cover;
-            min-height: 100vh; color: white; padding: 20px; 
-            transition: 0.3s;
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            min-height: 100vh; color: white; padding: 20px;
         }
 
-        /* --- FILTROS --- */
+        /* --- FILTROS E BUSCA --- */
         .search-wrapper { position: fixed; top: 20px; left: 20px; z-index: 1000; }
-        .search-container { background: #1a2942; border-radius: 20px; padding: 10px; transition: 0.4s; border: 2px solid #2d3748; width: 50px; overflow: hidden; }
+        .search-container {
+            background: #1a2942; border-radius: 20px; padding: 10px;
+            transition: 0.4s; border: 2px solid #2d3748; width: 50px;
+            overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
         .search-container.active { width: 320px; height: auto; }
         .search-main { display: flex; align-items: center; width: 100%; }
         .search-btn-trigger { background: none; border: none; font-size: 1.5em; cursor: pointer; padding: 5px; }
-        .search-input { border: none; background: transparent; color: white; padding: 10px; width: 100%; outline: none; opacity: 0; }
+        .search-input {
+            border: none; background: transparent; color: white;
+            padding: 10px; width: 100%; outline: none; opacity: 0;
+        }
         .search-container.active .search-input { opacity: 1; }
+        
         .filter-panel { display: none; padding: 15px; border-top: 1px solid #2d3748; }
         .search-container.active .filter-panel { display: block; }
         .filter-group { margin-bottom: 10px; }
-        .filter-group label { display: block; font-size: 0.75em; color: #a0aec0; margin-bottom: 3px; }
-        .filter-group select { width: 100%; background: #2d3748; color: white; border: 1px solid #4a5568; padding: 8px; border-radius: 5px; cursor: pointer; }
+        .filter-group label { display: block; font-size: 0.8em; color: #a0aec0; margin-bottom: 5px; }
+        .filter-group select { 
+            width: 100%; background: #2d3748; color: white; border: 1px solid #4a5568; 
+            padding: 8px; border-radius: 5px; 
+        }
 
-        /* --- GRID --- */
+        /* --- GRID E CARDS --- */
         .header { text-align: center; margin: 60px 0 30px; }
-        .header h1 { font-size: 2.5em; color: white; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; padding-bottom: 100px; }
+        .header h1 { font-size: 2.5em; background: linear-gradient(135deg, #6b5fff, #9b7aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; max-width: 1400px; margin: 0 auto; padding-bottom: 100px;
+        }
 
-        /* --- CARDS --- */
-        .product-card { background: rgba(30, 47, 71, 0.9); backdrop-filter: blur(10px); border-radius: 15px; overflow: hidden; position: relative; transition: 0.3s; border: 1px solid #2d3748; display: flex; flex-direction: column; }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--main-color); }
-        .media-container { width: 100%; height: 280px; background: #000; position: relative; }
+        .product-card {
+            background: #1e2f47; border-radius: 15px; overflow: hidden;
+            position: relative; transition: 0.3s; border: 1px solid #2d3748;
+            display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); border-color: #6b5fff; }
+
+        .media-container { width: 100%; height: 280px; background: #000; position: relative; overflow: hidden; }
         .media-scroller { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 100%; scrollbar-width: none; }
+        .media-scroller::-webkit-scrollbar { display: none; }
         .media-item { flex: 0 0 100%; height: 100%; scroll-snap-align: center; }
         .media-item img, .media-item video { width: 100%; height: 100%; object-fit: cover; }
-        .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-        .price { font-size: 1.4em; color: #4fd1c5; font-weight: bold; margin-bottom: 10px; }
-        .affiliate-btn { display: block; width: 100%; padding: 12px; background: var(--main-color); color: white; text-decoration: none; text-align: center; border-radius: 8px; font-weight: bold; transition: 0.2s; }
-        .affiliate-btn:hover { filter: brightness(1.2); }
 
-        /* --- BADGES --- */
-        .platform-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 10px; font-size: 0.7em; font-weight: bold; z-index: 5; color: white; }
-        .shopee { background: #ff4500; } .amazon { background: #ff9900; } .shein { background: #000; } .aliexpress { background: #e62e04; } .mercadolivre { background: #ffe600; color: #000; }
+        .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .price { font-size: 1.4em; color: #4fd1c5; font-weight: bold; margin: 10px 0; display: block; }
+        
+        .affiliate-btn {
+            display: block; width: 100%; padding: 12px; background: #6b5fff;
+            color: white; text-decoration: none; text-align: center; border-radius: 8px; font-weight: bold;
+        }
+
+        .platform-badge {
+            position: absolute; top: 10px; right: 10px; padding: 4px 10px;
+            border-radius: 10px; font-size: 0.7em; font-weight: bold; z-index: 5;
+        }
+        /* CORES DAS LOJAS */
+        .shopee { background: #ff4500; color: white; }
+        .amazon { background: #ff9900; color: white; }
+        .shein { background: #000; color: white; }
+        .aliexpress { background: #e62e04; color: white; }
+        .mercadolivre { background: #ffe600; color: #000; }
+        .outros { background: #6b5fff; color: white; }
 
         /* --- ADMIN --- */
         .admin-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; border: none; cursor: pointer; font-weight: bold; z-index: 1001; background: #2d3748; color: white; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px; }
-        .modal-content { background: #1a2942; max-width: 550px; margin: 0 auto; padding: 25px; border-radius: 15px; }
-        .form-control { width: 100%; padding: 10px; background: #2d3748; border: 1px solid #4a5568; color: white; border-radius: 8px; margin-bottom: 10px; }
-        .config-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--main-color); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; }
+        .modal-content { background: #1a2942; max-width: 550px; margin: 30px auto; padding: 25px; border-radius: 15px; border: 1px solid #4a5568; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #a0aec0; font-size: 0.9em; }
+        .form-control { width: 100%; padding: 12px; background: #2d3748; border: 1px solid #4a5568; color: white; border-radius: 8px; font-size: 1em; }
+        
+        /* Área JSON */
+        .magic-area { background: rgba(107, 95, 255, 0.1); border: 2px dashed #6b5fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+
+        .action-btns { position: absolute; top: 10px; left: 10px; display: flex; gap: 5px; z-index: 10; }
+        .btn-circle { width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; color: white; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -66,83 +100,100 @@
         <div class="search-container" id="searchContainer">
             <div class="search-main">
                 <button class="search-btn-trigger" onclick="toggleSearch()">🔍</button>
-                <input type="text" class="search-input" id="searchInput" placeholder="Buscar..." oninput="applyFilters()">
+                <input type="text" class="search-input" id="searchInput" placeholder="O que você busca?" oninput="applyFilters()">
             </div>
             <div class="filter-panel">
                 <div class="filter-group">
-                    <label>Ordenar por Preço:</label>
-                    <select id="fOrdem" onchange="applyFilters()">
-                        <option value="recent">Mais Recentes</option>
-                        <option value="low">Menor Preço</option>
-                        <option value="high">Maior Preço</option>
+                    <label>Filtrar por Loja:</label>
+                    <select id="fLoja" onchange="applyFilters()">
+                        <option value="all">Todas as Lojas</option>
+                        <option value="shopee">Shopee</option>
+                        <option value="amazon">Amazon</option>
+                        <option value="shein">Shein</option>
+                        <option value="aliexpress">AliExpress</option>
+                        <option value="mercadolivre">Mercado Livre</option>
+                        <option value="outros">Outros</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>Loja:</label>
-                    <select id="fLoja" onchange="applyFilters()">
-                        <option value="all">Todas</option>
+                    <label>Preço Máximo:</label>
+                    <select id="fPreco" onchange="applyFilters()">
+                        <option value="999999">Qualquer valor</option>
+                        <option value="50">Até R$ 50</option>
+                        <option value="100">Até R$ 100</option>
+                        <option value="200">Até R$ 200</option>
+                        <option value="500">Até R$ 500</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="admin-btn" onclick="handleAdminAuth()" id="adminBtn">🔒 Login Admin</button>
+
+    <div class="header">
+        <h1>🔥 Ofertas Imperdíveis</h1>
+        <p>Os melhores produtos com os melhores preços</p>
+    </div>
+
+    <div id="adminControls" style="display:none; text-align:center; margin-bottom: 30px;">
+        <button class="affiliate-btn" style="width:250px; display:inline-block; background: #48bb78;" onclick="openModal()">➕ Adicionar Produto</button>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+        <p style="text-align: center; grid-column: 1/-1;">Carregando ofertas...</p>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">📦 Novo Produto</h2>
+
+            <div class="magic-area">
+                <label style="color: #9b7aff; font-weight: bold;">✨ Importação Rápida (JSON)</label>
+                <textarea id="jsonPaste" class="form-control" style="height: 60px; margin-top: 10px; border-color: #6b5fff;" placeholder="Cole o código do botão mágico aqui..." oninput="parseQuickPaste()"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Nome do Produto</label>
+                <input type="text" id="pNome" class="form-control">
+            </div>
+            
+            <div style="display: flex; gap: 15px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Preço (R$)</label>
+                    <input type="text" id="pPreco" class="form-control" placeholder="0,00">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Loja</label>
+                    <select id="pLoja" class="form-control">
                         <option value="shopee">Shopee</option>
                         <option value="amazon">Amazon</option>
+                        <option value="shein">Shein</option>
+                        <option value="aliexpress">AliExpress</option>
                         <option value="mercadolivre">Mercado Livre</option>
                         <option value="outros">Outros</option>
                     </select>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <button class="admin-btn" onclick="handleAdminAuth()" id="adminBtn">🔒 Admin</button>
-
-    <div class="header">
-        <h1 id="siteTitle">🔥 Ofertas Imperdíveis</h1>
-    </div>
-
-    <div id="adminControls" style="display:none; text-align:center; margin-bottom: 30px;">
-        <button class="affiliate-btn" style="width:200px; display:inline-block;" onclick="openModal('prodModal')">➕ Novo Produto</button>
-        <button class="affiliate-btn" style="width:200px; display:inline-block; background:#4a5568;" onclick="openModal('configModal')">🎨 Customizar Site</button>
-    </div>
-
-    <div class="products-grid" id="productsGrid"></div>
-
-    <div class="modal" id="prodModal">
-        <div class="modal-content">
-            <h3>📦 Adicionar Oferta</h3><br>
-            <textarea id="jsonPaste" class="form-control" placeholder="Cole o JSON do Robô aqui..." oninput="parseQuickPaste()"></textarea>
-            <input type="text" id="pNome" class="form-control" placeholder="Nome do Produto">
-            <textarea id="pDesc" class="form-control" placeholder="Descrição curta"></textarea>
-            <input type="text" id="pPreco" class="form-control" placeholder="Preço (Ex: 49,90)">
-            <input type="text" id="pLink" class="form-control" placeholder="Link de Afiliado">
-            <select id="pLoja" class="form-control">
-                <option value="shopee">Shopee</option>
-                <option value="amazon">Amazon</option>
-                <option value="mercadolivre">Mercado Livre</option>
-                <option value="outros">Outros</option>
-            </select>
-            <label>Upload Local:</label>
-            <input type="file" id="pFiles" multiple class="form-control">
-            <label>Link WebDAV / Externo:</label>
-            <textarea id="pUrls" class="form-control" placeholder="Cole links de vídeos/fotos aqui..."></textarea>
-            <button class="affiliate-btn" onclick="saveProduct()">🚀 Publicar</button>
-            <button onclick="closeModal('prodModal')" style="color:gray; background:none; border:none; width:100%; margin-top:10px;">Fechar</button>
-        </div>
-    </div>
-
-    <div class="modal" id="configModal">
-        <div class="modal-content">
-            <h3>🎨 Personalização e WebDAV</h3><br>
-            <div class="config-box">
-                <label>Cor Principal dos Botões:</label>
-                <input type="color" id="cfgColor" class="form-control" style="height:50px">
-                <label>URL do Papel de Parede (Fundo):</label>
-                <input type="text" id="cfgBg" class="form-control" placeholder="Link da imagem de fundo">
+            <div class="form-group">
+                <label>Link de Afiliado</label>
+                <input type="text" id="pLink" class="form-control">
             </div>
-            <div class="config-box">
-                <label>Servidor WebDAV (Host):</label>
-                <input type="text" id="webdavHost" class="form-control" placeholder="https://seu-webdav.com/remote.php/dav/files/user/">
-                <small style="color:#a0aec0">Nota: O upload via WebDAV requer configuração de CORS no seu servidor.</small>
+
+            <div class="form-group" style="background: #2d3748; padding: 10px; border-radius: 8px;">
+                <label>Mídia (Upload do PC)</label>
+                <input type="file" id="pFiles" multiple accept="image/*,video/*" class="form-control">
+                <div id="uploadStatus" style="font-size: 0.8em; margin-top: 5px; color: #4fd1c5;"></div>
             </div>
-            <button class="affiliate-btn" onclick="saveConfig()">💾 Salvar Configurações</button>
-            <button onclick="closeModal('configModal')" style="color:gray; background:none; border:none; width:100%; margin-top:10px;">Fechar</button>
+
+            <div class="form-group">
+                <label>Ou URLs de Mídia (uma por linha)</label>
+                <textarea id="pUrls" class="form-control" rows="3" placeholder="https://exemplo.com/foto.jpg"></textarea>
+            </div>
+
+            <button class="affiliate-btn" style="background: #6b5fff; padding: 15px; font-size: 1.1em;" onclick="saveProduct()">🚀 Publicar Produto</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:#a0aec0; width:100%; margin-top:15px; cursor:pointer;">Cancelar e Fechar</button>
         </div>
     </div>
 
@@ -152,15 +203,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
     <script>
-       const firebaseConfig = {
-    apiKey: "AIzaSyDavrer1Tsd2-0pXR8jLf8gqyNToi_mlwk",
-    authDomain: "loja-99d52.firebaseapp.com",
-    projectId: "loja-99d52",
-    storageBucket: "loja-99d52.firebasestorage.app", // Verifique se é .appspot.com ou este
-    messagingSenderId: "852757558938", // Use este que você encontrou
-    appId: "1:852757558938:web:8a729d7e851f7a7d87ff19" // Ajustado com o novo ID
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyDavrer1Tsd2-0pXR8jLf8gqyNToi_mlwk",
+            authDomain: "loja-99d52.firebaseapp.com",
+            projectId: "loja-99d52",
+            storageBucket: "loja-99d52.appspot.com",
+            messagingSenderId: "76001366492",
+            appId: "1:76001366492:web:8a729d7e851f7a7d87ff19"
         };
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
@@ -172,8 +223,9 @@
         // AUTH
         auth.onAuthStateChanged(user => {
             isAdmin = !!user;
-            document.getElementById('adminBtn').innerText = user ? '🔓 Sair' : '🔒 Admin';
+            document.getElementById('adminBtn').innerText = user ? '🔓 Sair Admin' : '🔒 Login Admin';
             document.getElementById('adminControls').style.display = user ? 'block' : 'none';
+            render();
         });
 
         function handleAdminAuth() {
@@ -181,75 +233,72 @@
             else {
                 const email = prompt("Email:");
                 const pass = prompt("Senha:");
-                if(email && pass) auth.signInWithEmailAndPassword(email, pass).catch(() => alert("Erro!"));
+                if(email && pass) auth.signInWithEmailAndPassword(email, pass).catch(e => alert("Erro ao logar!"));
             }
         }
 
-        // MODAL
-        function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        // UI ACTIONS
         function toggleSearch() { document.getElementById('searchContainer').classList.toggle('active'); }
+        function openModal() { document.getElementById('modal').style.display = 'block'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; limparCampos(); }
+        function limparCampos() {
+            ['pNome', 'pPreco', 'pLink', 'pUrls', 'jsonPaste'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('pFiles').value = '';
+            document.getElementById('uploadStatus').innerText = '';
+        }
 
-        // QUICK PASTE
+        // IMPORTAÇÃO RÁPIDA (JSON)
         function parseQuickPaste() {
+            const val = document.getElementById('jsonPaste').value;
+            if(!val) return;
             try {
-                const data = JSON.parse(document.getElementById('jsonPaste').value);
-                document.getElementById('pNome').value = data.name || '';
-                document.getElementById('pDesc').value = data.description || '';
-                document.getElementById('pPreco').value = data.price || '';
-                document.getElementById('pLink').value = data.link || '';
-                document.getElementById('pUrls').value = (data.images || []).join('\n');
-            } catch(e) {}
-        }
-
-        // CONFIGURAÇÕES
-        async function saveConfig() {
-            const config = {
-                color: document.getElementById('cfgColor').value,
-                bg: document.getElementById('cfgBg').value,
-                webdav: document.getElementById('webdavHost').value
-            };
-            await db.collection('settings').doc('site').set(config);
-            alert("Configurações aplicadas!");
-            location.reload();
-        }
-
-        function loadConfig() {
-            db.collection('settings').doc('site').onSnapshot(doc => {
-                if(doc.exists()) {
-                    const data = doc.data();
-                    document.documentElement.style.setProperty('--main-color', data.color);
-                    if(data.bg) document.body.style.backgroundImage = `url('${data.bg}')`;
-                    document.getElementById('cfgColor').value = data.color;
-                    document.getElementById('cfgBg').value = data.bg;
-                    document.getElementById('webdavHost').value = data.webdav;
-                }
-            });
+                const data = JSON.parse(val);
+                if(data.name) document.getElementById('pNome').value = data.name;
+                if(data.price) document.getElementById('pPreco').value = data.price;
+                if(data.link) document.getElementById('pLink').value = data.link;
+                if(data.images) document.getElementById('pUrls').value = Array.isArray(data.images) ? data.images.join('\n') : data.images;
+                document.getElementById('jsonPaste').style.borderColor = "#48bb78";
+            } catch(e) { }
         }
 
         // SALVAR PRODUTO
         async function saveProduct() {
+            const btn = document.querySelector('button[onclick="saveProduct()"]');
+            btn.disabled = true; btn.innerText = "⏳ Enviando...";
+
             const files = document.getElementById('pFiles').files;
-            let urls = document.getElementById('pUrls').value.split('\n').filter(u => u.trim());
+            let urls = document.getElementById('pUrls').value.split('\n').filter(u => u.trim() !== "");
 
-            for(let file of files) {
-                const ref = storage.ref(`produtos/${Date.now()}_${file.name}`);
-                await ref.put(file);
-                urls.push(await ref.getDownloadURL());
+            try {
+                // Upload de arquivos locais para o Storage
+                for(let file of files) {
+                    document.getElementById('uploadStatus').innerText = `Subindo: ${file.name}`;
+                    const ref = storage.ref(`produtos/${Date.now()}_${file.name}`);
+                    await ref.put(file);
+                    const url = await ref.getDownloadURL();
+                    urls.push(url);
+                }
+
+                const product = {
+                    name: document.getElementById('pNome').value,
+                    price: document.getElementById('pPreco').value,
+                    link: document.getElementById('pLink').value,
+                    loja: document.getElementById('pLoja').value,
+                    medias: urls,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('products').add(product);
+                closeModal();
+                alert("Produto postado com sucesso! 🔥");
+            } catch (e) {
+                alert("Erro ao salvar: " + e.message);
+            } finally {
+                btn.disabled = false; btn.innerText = "🚀 Publicar Produto";
             }
-
-            await db.collection('products').add({
-                name: document.getElementById('pNome').value,
-                description: document.getElementById('pDesc').value,
-                price: document.getElementById('pPreco').value,
-                loja: document.getElementById('pLoja').value,
-                medias: urls,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            closeModal('prodModal');
         }
 
-        // LISTAR E FILTRAR
+        // LISTAR PRODUTOS
         function loadProducts() {
             db.collection('products').orderBy('createdAt', 'desc').onSnapshot(snap => {
                 allProducts = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
@@ -260,52 +309,57 @@
         function applyFilters() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const loja = document.getElementById('fLoja').value;
-            const ordem = document.getElementById('fOrdem').value;
+            const precoMax = parseFloat(document.getElementById('fPreco').value);
 
-            let filtered = allProducts.filter(p => {
-                return p.name.toLowerCase().includes(search) && (loja === 'all' || p.loja === loja);
+            const filtered = allProducts.filter(p => {
+                const precoNum = parseFloat(p.price.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+                const matchesSearch = p.name.toLowerCase().includes(search);
+                const matchesLoja = (loja === 'all' || p.loja === loja);
+                const matchesPreco = (precoNum <= precoMax);
+                return matchesSearch && matchesLoja && matchesPreco;
             });
-
-            // Ordenação por preço
-            filtered.sort((a, b) => {
-                const pA = parseFloat(a.price.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-                const pB = parseFloat(b.price.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-                if(ordem === 'low') return pA - pB;
-                if(ordem === 'high') return pB - pA;
-                return 0; // recent é o padrão do firebase
-            });
-
             render(filtered);
         }
 
-        function render(list) {
+        function render(list = allProducts) {
             const grid = document.getElementById('productsGrid');
-            grid.innerHTML = list.map(p => `
+            if(list.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #a0aec0;">Nenhum produto encontrado...</p>';
+                return;
+            }
+
+            grid.innerHTML = list.map(p => {
+                const medias = p.medias || [];
+                return `
                 <div class="product-card">
-                    ${isAdmin ? `<button onclick="deleteProd('${p.id}')" style="position:absolute;z-index:10;left:10px;top:10px;background:red;border:none;color:white;border-radius:50%;width:30px;height:30px;cursor:pointer">×</button>` : ''}
+                    ${isAdmin ? `
+                        <div class="action-btns">
+                            <button class="btn-circle" style="background:#e53e3e" onclick="deleteProd('${p.id}')">×</button>
+                        </div>
+                    ` : ''}
                     <span class="platform-badge ${p.loja}">${p.loja.toUpperCase()}</span>
                     <div class="media-container">
                         <div class="media-scroller">
-                            ${p.medias.map(m => `
+                            ${medias.map(m => `
                                 <div class="media-item">
-                                    ${m.includes('.mp4') || m.includes('video') ? `<video src="${m}" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>` : `<img src="${m}">`}
+                                    ${(m.includes('.mp4') || m.includes('video') || m.includes('firebasestorage') && m.toLowerCase().includes('.mp4'))
+                                        ? `<video src="${m}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()"></video>` 
+                                        : `<img src="${m}" loading="lazy">`}
                                 </div>
                             `).join('')}
                         </div>
                     </div>
                     <div class="product-info">
-                        <strong>${p.name}</strong>
-                        <p style="font-size:0.8em; color:#a0aec0; margin:5px 0">${p.description || ''}</p>
+                        <strong style="font-size: 1.1em; color: #e2e8f0;">${p.name}</strong>
                         <span class="price">R$ ${p.price}</span>
                         <a href="${p.link}" target="_blank" class="affiliate-btn">Ver Oferta</a>
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
         }
 
-        function deleteProd(id) { if(confirm("Excluir?")) db.collection('products').doc(id).delete(); }
+        function deleteProd(id) { if(confirm("Deseja mesmo excluir este produto?")) db.collection('products').doc(id).delete(); }
 
-        loadConfig();
         loadProducts();
     </script>
 </body>
