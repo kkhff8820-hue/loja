@@ -723,6 +723,15 @@ https://exemplo.com/video.mp4"></textarea>
             }
         }
 
+        // ========== CONFIGURAÇÃO FIXA DO WEBDAV ==========
+        // IMPORTANTE: Servidor WebDAV já configurado
+        const WEBDAV_CONFIG_FIXED = {
+            enabled: true,  // WebDAV já configurado
+            url: 'https://neck-trademark-rows-individuals.trycloudflare.com/',  // URL do Cloudflare Tunnel
+            username: 'miguel',
+            password: '115411'
+        };
+
         // ========== ESTADO GLOBAL ==========
         let webdav = null;
         let webdavConfig = null;
@@ -739,15 +748,28 @@ https://exemplo.com/video.mp4"></textarea>
         async function init() {
             console.log('🚀 Iniciando...');
             
-            loadWebDAVConfigFromLocalStorage();
-            
-            if (!webdavConfig) {
-                showModal('firstSetupModal');
-                return;
+            // Verificar se tem configuração fixa
+            if (WEBDAV_CONFIG_FIXED.enabled) {
+                console.log('✅ Usando configuração WebDAV fixa');
+                webdavConfig = {
+                    url: WEBDAV_CONFIG_FIXED.url,
+                    username: WEBDAV_CONFIG_FIXED.username,
+                    password: WEBDAV_CONFIG_FIXED.password
+                };
+                await connectToWebDAV();
+                setupAllEventListeners();
+            } else {
+                // Modo antigo: pede configuração
+                loadWebDAVConfigFromLocalStorage();
+                
+                if (!webdavConfig) {
+                    showModal('firstSetupModal');
+                    return;
+                }
+                
+                await connectToWebDAV();
+                setupAllEventListeners();
             }
-            
-            await connectToWebDAV();
-            setupAllEventListeners();
         }
 
         function loadWebDAVConfigFromLocalStorage() {
