@@ -117,11 +117,26 @@
         
         .products-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 20px; 
-            max-width: 1400px; 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 8px; 
+            max-width: 1600px; 
             margin: 0 auto; 
-            padding-bottom: 100px; 
+            padding: 0 8px 100px 8px; 
+        }
+        
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 15px;
+                padding: 0 20px 100px 20px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
         }
 
         .product-card { 
@@ -174,33 +189,74 @@
         }
         
         .product-info { 
-            padding: 15px; 
+            padding: 8px; 
             flex-grow: 1; 
             display: flex; 
             flex-direction: column; 
         }
         
+        @media (min-width: 768px) {
+            .product-info {
+                padding: 12px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .product-info {
+                padding: 15px;
+            }
+        }
+        
         .price { 
-            font-size: 1.4em; 
-            color: #4fd1c5; 
+            font-size: 1.1em; 
+            color: #ff6b35; 
             font-weight: bold; 
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
+        }
+        
+        @media (min-width: 768px) {
+            .price {
+                font-size: 1.3em;
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .price {
+                font-size: 1.4em;
+            }
         }
         
         .affiliate-btn { 
             display: block; 
             width: 100%; 
-            padding: 12px; 
+            padding: 8px; 
             background: var(--main-color); 
             color: white; 
             text-decoration: none; 
             text-align: center; 
-            border-radius: 8px; 
+            border-radius: 6px; 
             font-weight: bold; 
             transition: 0.2s; 
             cursor: pointer; 
             border: none; 
             margin-top: auto;
+            font-size: 0.85em;
+        }
+        
+        @media (min-width: 768px) {
+            .affiliate-btn {
+                padding: 10px;
+                border-radius: 8px;
+                font-size: 0.9em;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .affiliate-btn {
+                padding: 12px;
+                font-size: 1em;
+            }
         }
         
         .affiliate-btn:hover { 
@@ -240,6 +296,31 @@
         
         .admin-btn:hover {
             background: #4a5568;
+        }
+        
+        .cupons-btn {
+            position: fixed;
+            top: 20px;
+            right: 140px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1001;
+            background: #48bb78;
+            color: white;
+        }
+        
+        .cupons-btn:hover {
+            background: #38a169;
+        }
+        
+        @media (max-width: 768px) {
+            .cupons-btn {
+                right: 20px;
+                top: 70px;
+            }
         }
         
         .modal { 
@@ -290,20 +371,40 @@
         .delete-btn {
             position: absolute;
             z-index: 10;
-            left: 10px;
-            top: 10px;
+            left: 5px;
+            top: 5px;
             background: #e53e3e;
             border: none;
             color: white;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
+            width: 28px;
+            height: 28px;
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 1.2em;
             line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        @media (min-width: 768px) {
+            .delete-btn {
+                left: 8px;
+                top: 8px;
+                width: 32px;
+                height: 32px;
+                font-size: 1.4em;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .delete-btn {
+                left: 10px;
+                top: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 1.5em;
+            }
         }
         
         .delete-btn:hover {
@@ -428,6 +529,162 @@
 
         .status-connected { background: #48bb78; }
         .status-disconnected { background: #e53e3e; }
+        
+        /* PÁGINA DE CUPONS */
+        .cupons-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            z-index: 1500;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .cupons-page.active {
+            display: block;
+        }
+        
+        .cupons-header {
+            text-align: center;
+            margin: 80px 0 30px;
+        }
+        
+        .cupons-header h2 {
+            font-size: 2em;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .cupons-close {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1501;
+        }
+        
+        .cupons-close:hover {
+            background: #c53030;
+        }
+        
+        .cupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+        
+        .cupom-card {
+            background: rgba(30, 47, 71, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #2d3748;
+            transition: 0.3s;
+            position: relative;
+        }
+        
+        .cupom-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--main-color);
+            box-shadow: 0 8px 16px rgba(107, 95, 255, 0.3);
+        }
+        
+        .cupom-loja {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cupom-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--main-color);
+        }
+        
+        .cupom-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .cupom-codigo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .cupom-code {
+            background: #2d3748;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #4fd1c5;
+            flex-grow: 1;
+            text-align: center;
+            border: 2px dashed #4a5568;
+        }
+        
+        .cupom-copy-btn {
+            background: var(--main-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .cupom-copy-btn:hover {
+            filter: brightness(1.2);
+        }
+        
+        .cupom-desc {
+            font-size: 0.9em;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+        
+        .cupom-link {
+            display: block;
+            text-align: center;
+            background: #48bb78;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .cupom-link:hover {
+            background: #38a169;
+        }
+        
+        .empty-cupons {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a0aec0;
+        }
 
         .help-text {
             background: rgba(66, 153, 225, 0.1);
@@ -476,12 +733,15 @@
 
     <button class="admin-btn" id="adminBtn">🔒 Admin</button>
 
+    <button class="cupons-btn" id="cuponsBtn">🎟️ Cupons</button>
+
     <div class="header">
         <h1 id="siteTitle">🔥 Ofertas Imperdíveis</h1>
     </div>
 
     <div class="admin-controls" id="adminControls">
         <button class="affiliate-btn" id="btnNovoProduto">➕ Novo Produto</button>
+        <button class="affiliate-btn btn-secondary" id="btnGerenciarCupons">🎟️ Gerenciar Cupons</button>
         <button class="affiliate-btn btn-secondary" id="btnCustomizar">🎨 Customizar Site</button>
     </div>
 
@@ -495,6 +755,23 @@
     <div class="webdav-status" id="webdavStatus">
         <span class="status-indicator status-disconnected"></span>
         Conectando...
+    </div>
+
+    <!-- Página de Cupons -->
+    <div class="cupons-page" id="cuponsPage">
+        <button class="cupons-close" id="cuponsClose">← Voltar</button>
+        
+        <div class="cupons-header">
+            <h2>🎟️ Cupons de Desconto</h2>
+            <p style="color: #a0aec0;">Copie o código e cole na loja para ganhar desconto!</p>
+        </div>
+        
+        <div class="cupons-grid" id="cuponsGrid">
+            <div class="empty-cupons">
+                <h2>🎟️</h2>
+                <p>Nenhum cupom disponível no momento.</p>
+            </div>
+        </div>
     </div>
 
     <!-- Modal: Primeira Configuração WebDAV -->
@@ -590,7 +867,43 @@ https://exemplo.com/video.mp4"></textarea>
         </div>
     </div>
 
-    <!-- Modal: Configurações -->
+    <!-- Modal: Gerenciar Cupons -->
+    <div class="modal" id="cuponsModal">
+        <div class="modal-content">
+            <h3>🎟️ Gerenciar Cupons</h3>
+            <br>
+            
+            <div class="config-box">
+                <label>Loja:</label>
+                <select id="cupomLoja" class="form-control">
+                    <option value="shopee">Shopee</option>
+                    <option value="aliexpress">AliExpress</option>
+                    <option value="amazon">Amazon</option>
+                    <option value="mercadolivre">Mercado Livre</option>
+                    <option value="outros">Outros</option>
+                </select>
+                
+                <label>Código do Cupom *</label>
+                <input type="text" id="cupomCodigo" class="form-control" placeholder="Ex: DESCONTO10">
+                
+                <label>Descrição do Desconto *</label>
+                <input type="text" id="cupomDesc" class="form-control" placeholder="Ex: 10% OFF em eletrônicos">
+                
+                <label>Link de Afiliado (Opcional)</label>
+                <input type="text" id="cupomLink" class="form-control" placeholder="https://...">
+            </div>
+            
+            <button class="affiliate-btn" id="btnAdicionarCupom" style="margin-top: 20px;">➕ Adicionar Cupom</button>
+            <button class="affiliate-btn btn-secondary" id="btnFecharCuponsModal">Cancelar</button>
+            
+            <hr style="margin: 30px 0; border-color: #2d3748;">
+            
+            <h4 style="margin-bottom: 15px;">📋 Cupons Cadastrados:</h4>
+            <div id="listaCupons" style="max-height: 300px; overflow-y: auto;">
+                <p style="color: #a0aec0; text-align: center;">Nenhum cupom cadastrado ainda.</p>
+            </div>
+        </div>
+    </div>
     <div class="modal" id="configModal">
         <div class="modal-content">
             <h3>🎨 Personalização do Site</h3>
@@ -727,7 +1040,7 @@ https://exemplo.com/video.mp4"></textarea>
         // IMPORTANTE: Servidor WebDAV já configurado
         const WEBDAV_CONFIG_FIXED = {
             enabled: true,  // WebDAV já configurado
-            url: 'https://neck-trademark-rows-individuals.trycloudflare.com/',  // URL do Cloudflare Tunnel
+            url: 'https://guarantee-guards-debian-politicians.trycloudflare.com/',  // URL ATUALIZADA
             username: 'miguel',
             password: '115411'
         };
@@ -737,6 +1050,7 @@ https://exemplo.com/video.mp4"></textarea>
         let webdavConfig = null;
         let webdavConnected = false;
         let allProducts = [];
+        let allCupons = [];
         let isAdmin = false;
         let currentConfig = {
             color: '#6b5fff',
@@ -833,6 +1147,13 @@ https://exemplo.com/video.mp4"></textarea>
                 } else {
                     allProducts = [];
                 }
+                
+                const cuponsData = await webdav.loadJSON('cupons.json');
+                if (cuponsData && Array.isArray(cuponsData)) {
+                    allCupons = cuponsData;
+                } else {
+                    allCupons = [];
+                }
             } catch (e) {
                 console.log('❌ Erro ao carregar dados:', e);
             }
@@ -871,11 +1192,23 @@ https://exemplo.com/video.mp4"></textarea>
 
             // Admin controls
             document.getElementById('btnNovoProduto').addEventListener('click', () => showModal('prodModal'));
+            document.getElementById('btnGerenciarCupons').addEventListener('click', () => {
+                showModal('cuponsModal');
+                renderListaCupons();
+            });
             document.getElementById('btnCustomizar').addEventListener('click', () => {
                 document.getElementById('cfgColor').value = currentConfig.color;
                 document.getElementById('cfgBg').value = currentConfig.bg;
                 showModal('configModal');
             });
+            
+            // Cupons page
+            document.getElementById('cuponsBtn').addEventListener('click', abrirCupons);
+            document.getElementById('cuponsClose').addEventListener('click', fecharCupons);
+            
+            // Modal Cupons
+            document.getElementById('btnAdicionarCupom').addEventListener('click', adicionarCupom);
+            document.getElementById('btnFecharCuponsModal').addEventListener('click', () => hideModal('cuponsModal'));
 
             // Modal Login
             document.getElementById('btnFazerLogin').addEventListener('click', doLogin);
@@ -1110,14 +1443,183 @@ Testando conexão...
             renderProducts();
         }
 
+        // ========== CUPONS ==========
+        function abrirCupons() {
+            document.getElementById('cuponsPage').classList.add('active');
+            renderCupons();
+        }
+        
+        function fecharCupons() {
+            document.getElementById('cuponsPage').classList.remove('active');
+        }
+        
+        function renderCupons() {
+            const grid = document.getElementById('cuponsGrid');
+            
+            if (allCupons.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-cupons">
+                        <h2>🎟️</h2>
+                        <p>Nenhum cupom disponível no momento.</p>
+                        ${isAdmin ? '<p style="margin-top: 10px;">Faça login como admin para adicionar cupons!</p>' : ''}
+                    </div>
+                `;
+                return;
+            }
+            
+            // Agrupar cupons por loja
+            const cuponsPorLoja = {};
+            allCupons.forEach(cupom => {
+                if (!cuponsPorLoja[cupom.loja]) {
+                    cuponsPorLoja[cupom.loja] = [];
+                }
+                cuponsPorLoja[cupom.loja].push(cupom);
+            });
+            
+            const lojasIcons = {
+                shopee: '🛍️',
+                aliexpress: '🏪',
+                amazon: '📦',
+                mercadolivre: '💛',
+                outros: '🏬'
+            };
+            
+            const lojasNomes = {
+                shopee: 'Shopee',
+                aliexpress: 'AliExpress',
+                amazon: 'Amazon',
+                mercadolivre: 'Mercado Livre',
+                outros: 'Outros'
+            };
+            
+            grid.innerHTML = Object.keys(cuponsPorLoja).map(loja => `
+                <div class="cupom-card">
+                    <div class="cupom-loja">
+                        <span>${lojasIcons[loja] || '🏬'}</span>
+                        <span>${lojasNomes[loja] || loja}</span>
+                    </div>
+                    ${cuponsPorLoja[loja].map(cupom => `
+                        <div class="cupom-item">
+                            <div class="cupom-codigo">
+                                <div class="cupom-code">${cupom.codigo}</div>
+                                <button class="cupom-copy-btn" onclick="copiarCupom('${cupom.codigo}')">📋</button>
+                            </div>
+                            <div class="cupom-desc">${cupom.descricao}</div>
+                            ${cupom.link ? `<a href="${cupom.link}" target="_blank" class="cupom-link">🛒 Usar Cupom</a>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+        
+        function copiarCupom(codigo) {
+            navigator.clipboard.writeText(codigo).then(() => {
+                showNotif('✅ Cupom copiado: ' + codigo, 'success');
+            }).catch(() => {
+                showNotif('❌ Erro ao copiar cupom', 'error');
+            });
+        }
+        
+        async function adicionarCupom() {
+            const loja = document.getElementById('cupomLoja').value;
+            const codigo = document.getElementById('cupomCodigo').value.trim();
+            const descricao = document.getElementById('cupomDesc').value.trim();
+            const link = document.getElementById('cupomLink').value.trim();
+            
+            if (!codigo || !descricao) {
+                showNotif('⚠️ Preencha o código e a descrição!', 'warning');
+                return;
+            }
+            
+            const novoCupom = {
+                id: Date.now().toString(),
+                loja: loja,
+                codigo: codigo.toUpperCase(),
+                descricao: descricao,
+                link: link,
+                createdAt: Date.now()
+            };
+            
+            allCupons.unshift(novoCupom);
+            
+            showLoading(true);
+            try {
+                if (webdavConfig && !webdavConfig.demo) {
+                    await webdav.saveJSON('cupons.json', allCupons);
+                } else {
+                    localStorage.setItem('demo-cupons', JSON.stringify(allCupons));
+                }
+                
+                document.getElementById('cupomCodigo').value = '';
+                document.getElementById('cupomDesc').value = '';
+                document.getElementById('cupomLink').value = '';
+                
+                showNotif('✅ Cupom adicionado!', 'success');
+                renderListaCupons();
+            } catch (e) {
+                showNotif('❌ Erro ao salvar: ' + e.message, 'error');
+            }
+            showLoading(false);
+        }
+        
+        async function deletarCupom(id) {
+            if (!confirm('⚠️ Tem certeza que deseja excluir este cupom?')) return;
+            
+            showLoading(true);
+            try {
+                allCupons = allCupons.filter(c => c.id !== id);
+                
+                if (webdavConfig && !webdavConfig.demo) {
+                    await webdav.saveJSON('cupons.json', allCupons);
+                } else {
+                    localStorage.setItem('demo-cupons', JSON.stringify(allCupons));
+                }
+                
+                showNotif('✅ Cupom excluído!', 'success');
+                renderListaCupons();
+            } catch (e) {
+                showNotif('❌ Erro ao excluir', 'error');
+            }
+            showLoading(false);
+        }
+        
+        function renderListaCupons() {
+            const lista = document.getElementById('listaCupons');
+            
+            if (allCupons.length === 0) {
+                lista.innerHTML = '<p style="color: #a0aec0; text-align: center;">Nenhum cupom cadastrado ainda.</p>';
+                return;
+            }
+            
+            lista.innerHTML = allCupons.map(cupom => `
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--main-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                        <div>
+                            <strong style="color: #4fd1c5; font-size: 1.1em;">${cupom.codigo}</strong>
+                            <span style="color: #a0aec0; font-size: 0.85em; margin-left: 10px;">${cupom.loja.toUpperCase()}</span>
+                        </div>
+                        <button onclick="deletarCupom('${cupom.id}')" style="background: #e53e3e; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9em;">🗑️</button>
+                    </div>
+                    <p style="color: #e2e8f0; font-size: 0.9em; margin-bottom: 5px;">${cupom.descricao}</p>
+                    ${cupom.link ? `<a href="${cupom.link}" target="_blank" style="color: #4fd1c5; font-size: 0.85em; text-decoration: none;">🔗 ${cupom.link}</a>` : ''}
+                </div>
+            `).join('');
+        }
+        
         function loadDemoData() {
             try {
                 const stored = localStorage.getItem('demo-products');
                 if (stored) {
                     allProducts = JSON.parse(stored);
                 }
+                
+                const storedCupons = localStorage.getItem('demo-cupons');
+                if (storedCupons) {
+                    allCupons = JSON.parse(storedCupons);
+                }
             } catch (e) {
                 allProducts = [];
+                allCupons = [];
             }
         }
 
@@ -1310,13 +1812,20 @@ Testando conexão...
                         </div>
                     </div>
                     <div class="product-info">
-                        <strong style="font-size: 1.1em; display: block; margin-bottom: 8px;">${p.name}</strong>
-                        ${p.description ? `<p style="font-size:0.85em; color:#a0aec0; margin-bottom: 10px;">${p.description}</p>` : ''}
+                        <strong style="font-size: 0.85em; display: block; margin-bottom: 5px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${p.name}</strong>
+                        ${p.description ? `<p style="font-size:0.75em; color:#a0aec0; margin-bottom: 8px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: none;" class="desc-desktop">${p.description}</p>` : ''}
                         <span class="price">R$ ${p.price}</span>
                         <a href="${p.link}" target="_blank" rel="noopener" class="affiliate-btn">🛒 Ver Oferta</a>
                     </div>
                 </div>
             `).join('');
+            
+            // Mostrar descrição apenas no desktop
+            if (window.innerWidth >= 768) {
+                document.querySelectorAll('.desc-desktop').forEach(el => {
+                    el.style.display = '-webkit-box';
+                });
+            }
         }
 
         // ========== NOTIFICATIONS ==========
